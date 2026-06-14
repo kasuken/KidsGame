@@ -1,0 +1,154 @@
+:root {
+    --sky: #73d9ff;
+    --ocean: #2aa7cf;
+    --sand: #ffcf67;
+    --ink: #17445f;
+    --sunset: #ff8c4b;
+    --foam: #fff6bf;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Fredoka', 'Titan One', sans-serif;
+    background-color: var(--sky);
+    background-image:
+        radial-gradient(circle at 88% 12%, rgba(255, 140, 75, 0.95) 0 6%, transparent 7%),
+        radial-gradient(circle at 16% 78%, rgba(255, 246, 191, 0.72) 0 9%, transparent 10%),
+        linear-gradient(180deg, transparent 0 54%, rgba(42, 167, 207, 0.62) 55% 66%, rgba(255, 207, 103, 0.9) 67%),
+        repeating-linear-gradient(-12deg, rgba(255, 246, 191, 0.26) 0 18px, transparent 18px 52px);
+    background-size: 640px 640px, 560px 560px, 100% 100%, 96px 96px;
+}
+
+#game-container {
+    width: min(100vw, 980px);
+    height: min(100vh, 620px);
+    padding: 12px;
+    z-index: 10;
+    position: relative;
+}
+
+#game-container canvas {
+    border-radius: 34px;
+    border: 12px solid #ffffff;
+    box-shadow: 14px 22px 0 var(--ink);
+    background-color: var(--sky);
+}
+
+#sun-stickers,
+#beach-shapes {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+#sun-stickers::before,
+#sun-stickers::after,
+#beach-shapes::before,
+#beach-shapes::after {
+    content: '';
+    position: absolute;
+    border: 8px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+}
+
+#sun-stickers::before {
+    width: 132px;
+    height: 132px;
+    left: 38px;
+    top: 56px;
+    border-radius: 50%;
+    background: var(--sunset);
+}
+
+#sun-stickers::after {
+    width: 138px;
+    height: 78px;
+    left: 78px;
+    bottom: 58px;
+    border-radius: 999px;
+    background: var(--foam);
+    transform: rotate(-12deg);
+}
+
+#beach-shapes::before {
+    width: 184px;
+    height: 92px;
+    right: 30px;
+    top: 84px;
+    border-radius: 999px 999px 38px 38px;
+    background: repeating-linear-gradient(90deg, #ff8c4b 0 26px, #fff6bf 26px 48px);
+    transform: rotate(12deg);
+}
+
+#beach-shapes::after {
+    width: 132px;
+    height: 132px;
+    right: 72px;
+    bottom: 46px;
+    border-radius: 46% 54% 36% 64%;
+    background: var(--sand);
+    transform: rotate(-16deg);
+}
+
+#home-btn {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 200;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    text-decoration: none;
+    background: #ffffff;
+    border: 5px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+#home-btn:hover,
+#home-btn:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--ink);
+    outline: none;
+}
+
+#home-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 var(--ink);
+}
+
+@media (max-width: 720px) {
+    #game-container {
+        padding: 6px;
+    }
+
+    #game-container canvas {
+        border-width: 8px;
+        border-radius: 24px;
+        box-shadow: 8px 12px 0 var(--ink);
+    }
+
+    #sun-stickers,
+    #beach-shapes {
+        display: none;
+    }
+}
