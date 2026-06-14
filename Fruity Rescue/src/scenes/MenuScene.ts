@@ -65,19 +65,9 @@ export default class MenuScene extends Phaser.Scene {
         cloudsOutline.strokeEllipse(width * 0.25, 110, 220, 80);
         cloudsOutline.strokeEllipse(width * 0.72, 85, 230, 84);
 
-        const fruit = this.add.graphics();
-        fruit.lineStyle(6, 0x111111);
-        fruit.fillStyle(0xff477e, 1);
-        fruit.fillCircle(width * 0.14, 320, 26);
-        fruit.strokeCircle(width * 0.14, 320, 26);
-
-        fruit.fillStyle(0xffea00, 1);
-        fruit.fillCircle(width * 0.84, 285, 24);
-        fruit.strokeCircle(width * 0.84, 285, 24);
-
-        fruit.fillStyle(0xff729f, 1);
-        fruit.fillCircle(width * 0.8, 350, 22);
-        fruit.strokeCircle(width * 0.8, 350, 22);
+        this.add.text(width * 0.16, 292, '🍎', { fontSize: '56px' }).setOrigin(0.5).setAngle(-12);
+        this.add.text(width * 0.84, 254, '🍌', { fontSize: '56px' }).setOrigin(0.5).setAngle(14);
+        this.add.text(width * 0.88, 360, '🍓', { fontSize: '52px' }).setOrigin(0.5).setAngle(-6);
     }
 
     private createModeButton(

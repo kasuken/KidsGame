@@ -3,6 +3,13 @@ import { Sfx } from '../game/sfx';
 import { FoodKind, GameMode, GameSummary, ModeSettings, MonsterAccessory, MonsterProfile } from '../types';
 
 const FOOD_KINDS: Exclude<FoodKind, 'rock'>[] = ['apple', 'banana', 'cupcake', 'carrot'];
+const FOOD_EMOJIS: Record<FoodKind, string> = {
+    apple: '🍎',
+    banana: '🍌',
+    cupcake: '🧁',
+    carrot: '🥕',
+    rock: '🪨'
+};
 const MONSTERS: MonsterProfile[] = [
     {
         name: 'Munchy',
@@ -56,7 +63,8 @@ const MODE_SETTINGS: Record<GameMode, ModeSettings> = {
 
 type FaceMood = 'happy' | 'open' | 'sad';
 
-type FeedItem = Phaser.Physics.Arcade.Sprite & {
+type FeedItem = Phaser.GameObjects.Text & {
+    body: Phaser.Physics.Arcade.Body;
     input: Phaser.Types.Input.InteractiveObject;
 };
 
@@ -108,7 +116,7 @@ export default class GameScene extends Phaser.Scene {
         this.fallingItems = this.physics.add.group();
         this.input.on('dragstart', (_pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject) => {
             const item = gameObject as FeedItem;
-            item.setVelocity(0, 0);
+            item.body.setVelocity(0, 0);
             item.setDepth(80);
             this.setMouthOpen(true);
         });
@@ -131,7 +139,7 @@ export default class GameScene extends Phaser.Scene {
             return;
         }
 
-        const children = this.fallingItems.getChildren() as Phaser.Physics.Arcade.Sprite[];
+        const children = this.fallingItems.getChildren() as FeedItem[];
 
         for (const item of children) {
             if (!item.active) {
@@ -192,7 +200,8 @@ export default class GameScene extends Phaser.Scene {
                 strokeThickness: 9,
                 shadow: { offsetX: 4, offsetY: 4, color: '#141414', fill: true }
             })
-            .setOrigin(0.5, 0);
+            .setOrigin(0.5, 0)
+            .setDepth(100);
 
         const dotGap = 38;
         const firstDotX = this.scale.width / 2 - ((this.monster.targetMeals - 1) * dotGap) / 2;
@@ -201,6 +210,7 @@ export default class GameScene extends Phaser.Scene {
             this.add.circle(firstDotX + i * dotGap + 4, 76, 12, 0x141414, 1);
             const dot = this.add.circle(firstDotX + i * dotGap, 72, 12, 0xffffff, 1);
             dot.setStrokeStyle(4, 0x141414, 1);
+            dot.setDepth(100);
             this.progressDots.push(dot);
         }
 
@@ -212,7 +222,8 @@ export default class GameScene extends Phaser.Scene {
                 stroke: '#141414',
                 strokeThickness: 8
             })
-            .setOrigin(1, 0);
+            .setOrigin(1, 0)
+            .setDepth(100);
 
         if (this.mode === 'explorer') {
             this.scoreText = this.add.text(24, 18, 'SCORE 0', {
@@ -221,7 +232,7 @@ export default class GameScene extends Phaser.Scene {
                 color: '#ffd155',
                 stroke: '#141414',
                 strokeThickness: 8
-            });
+            }).setDepth(100);
         }
 
         const homeBtn = this.add
@@ -258,22 +269,38 @@ export default class GameScene extends Phaser.Scene {
 
     private spawnObject(): void {
         const kind = this.pickItemKind();
-        const item = this.fallingItems.create(
-            Phaser.Math.Between(72, this.scale.width - 72),
-            -48,
-            `food-${kind}`
-        ) as FeedItem;
+        const item = this.createFoodItem(kind);
 
         item.setActive(true);
         item.setVisible(true);
-        item.setScale(this.settings.itemScale);
         item.setData('kind', kind);
         item.setInteractive({ useHandCursor: true, draggable: true });
-        item.setAngularVelocity(Phaser.Math.Between(-80, 80));
-        item.setVelocity(Phaser.Math.Between(-18, 18), Phaser.Math.Between(this.settings.minFallSpeed, this.settings.maxFallSpeed) * this.getPaceMultiplier());
+        item.body.angularVelocity = Phaser.Math.Between(-80, 80);
+        item.body.setVelocity(Phaser.Math.Between(-18, 18), Phaser.Math.Between(this.settings.minFallSpeed, this.settings.maxFallSpeed) * this.getPaceMultiplier());
         item.setDepth(30);
         this.input.setDraggable(item);
         item.on('pointerdown', () => this.tossToMouth(item));
+    }
+
+    private createFoodItem(kind: FoodKind): FeedItem {
+        const item = this.add
+            .text(
+                Phaser.Math.Between(72, this.scale.width - 72),
+                -48,
+                FOOD_EMOJIS[kind],
+                {
+                    fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif',
+                    fontSize: '64px'
+                }
+            )
+            .setOrigin(0.5)
+            .setScale(this.settings.itemScale);
+
+        this.physics.add.existing(item);
+        item.body.setSize(64, 64);
+        this.fallingItems.add(item);
+
+        return item as FeedItem;
     }
 
     private pickItemKind(): FoodKind {
@@ -294,7 +321,7 @@ export default class GameScene extends Phaser.Scene {
             return;
         }
 
-        item.setVelocity(0, 0);
+        item.body.setVelocity(0, 0);
         item.disableInteractive();
         item.setDepth(90);
         this.setMouthOpen(true);
@@ -321,7 +348,7 @@ export default class GameScene extends Phaser.Scene {
         if (!forceFeed && !Phaser.Geom.Rectangle.Contains(this.mouthZone, item.x, item.y)) {
             const body = item.body as Phaser.Physics.Arcade.Body;
             body.setEnable(true);
-            item.setVelocity(Phaser.Math.Between(-12, 12), this.settings.maxFallSpeed);
+            item.body.setVelocity(Phaser.Math.Between(-12, 12), this.settings.maxFallSpeed);
             item.setDepth(30);
             return;
         }
@@ -576,6 +603,6 @@ export default class GameScene extends Phaser.Scene {
     }
 
     private getWantedLabel(): string {
-        return `${this.monster.name} wants ${this.monster.wantedFood}s`;
+        return `Monster needs to eat ${FOOD_EMOJIS[this.monster.wantedFood]}`;
     }
 }

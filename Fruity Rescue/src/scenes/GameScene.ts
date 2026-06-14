@@ -3,9 +3,10 @@ import { Sfx } from '../game/sfx';
 import { GameMode, GameSummary, ModeSettings } from '../types';
 
 const LEVEL_TARGETS = [3, 5, 10];
-const FRUIT_KEYS = ['fruit-apple', 'fruit-banana', 'fruit-strawberry'];
+const FRUIT_EMOJIS = ['🍎', '🍌', '🍓'];
 
 type FallingKind = 'fruit' | 'bad';
+type FallingItem = (Phaser.GameObjects.Text | Phaser.Physics.Arcade.Sprite) & { body: Phaser.Physics.Arcade.Body };
 
 const MODE_SETTINGS: Record<GameMode, ModeSettings> = {
     baby: {
@@ -76,7 +77,7 @@ export default class GameScene extends Phaser.Scene {
             return;
         }
 
-        const children = this.fallingItems.getChildren() as Phaser.Physics.Arcade.Sprite[];
+        const children = this.fallingItems.getChildren() as FallingItem[];
 
         for (const item of children) {
             if (!item.active) {
@@ -264,28 +265,49 @@ export default class GameScene extends Phaser.Scene {
         }
 
         const spawnBad = this.mode === 'explorer' && Math.random() < this.settings.badObjectChance;
-        const textureKey = spawnBad ? 'bad-yuck' : Phaser.Utils.Array.GetRandom(FRUIT_KEYS);
-
-        const item = this.fallingItems.create(
-            Phaser.Math.Between(70, this.scale.width - 70),
-            -46,
-            textureKey
-        ) as Phaser.Physics.Arcade.Sprite;
+        const item = spawnBad ? this.createBadItem() : this.createFruitItem();
 
         item.setActive(true);
         item.setVisible(true);
-        item.setScale(this.settings.objectScale);
         item.setData('kind', spawnBad ? 'bad' : 'fruit');
         item.setInteractive({ useHandCursor: true });
-        item.setAngularVelocity(Phaser.Math.Between(-70, 70));
 
         const speed = Phaser.Math.Between(this.settings.minFallSpeed, this.settings.maxFallSpeed) * this.getPaceMultiplier();
-        item.setVelocity(Phaser.Math.Between(-24, 24), speed);
+        item.body.setVelocity(Phaser.Math.Between(-24, 24), speed);
+        item.body.angularVelocity = Phaser.Math.Between(-70, 70);
         item.setDepth(10);
         item.on('pointerdown', () => this.handleTap(item));
     }
 
-    private handleTap(item: Phaser.Physics.Arcade.Sprite): void {
+    private createBadItem(): FallingItem {
+        return this.fallingItems.create(
+            Phaser.Math.Between(70, this.scale.width - 70),
+            -46,
+            'bad-yuck'
+        ).setScale(this.settings.objectScale) as FallingItem;
+    }
+
+    private createFruitItem(): FallingItem {
+        const item = this.add
+            .text(
+                Phaser.Math.Between(70, this.scale.width - 70),
+                -46,
+                Phaser.Utils.Array.GetRandom(FRUIT_EMOJIS),
+                {
+                    fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif',
+                    fontSize: `${Math.round(58 * this.settings.objectScale)}px`
+                }
+            )
+            .setOrigin(0.5);
+
+        this.physics.add.existing(item);
+        item.body.setSize(58 * this.settings.objectScale, 58 * this.settings.objectScale);
+        this.fallingItems.add(item);
+
+        return item as FallingItem;
+    }
+
+    private handleTap(item: FallingItem): void {
         if (this.finished || !item.active) {
             return;
         }
@@ -320,7 +342,7 @@ export default class GameScene extends Phaser.Scene {
         this.updateHud();
     }
 
-    private handleGroundContact(item: Phaser.Physics.Arcade.Sprite): void {
+    private handleGroundContact(item: FallingItem): void {
         if (this.finished || !item.active) {
             return;
         }
