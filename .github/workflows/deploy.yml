@@ -38,6 +38,7 @@ jobs:
             "Feed the Monster=feed-the-monster"
             "Fruity Rescue=fruity-rescue"
             "Build a Zoo=build-a-zoo"
+            "Treasure Beach=treasure-beach"
           )
 
           rm -rf _site
