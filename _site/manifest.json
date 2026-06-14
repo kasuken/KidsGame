@@ -1,0 +1,18 @@
+{
+  "name": "Kids Game Arcade",
+  "short_name": "Kids Arcade",
+  "description": "A playful collection of fun, friendly browser games for kids.",
+  "theme_color": "#7ad7ff",
+  "background_color": "#ffd86b",
+  "display": "standalone",
+  "orientation": "landscape",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

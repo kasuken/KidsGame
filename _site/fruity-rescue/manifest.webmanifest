@@ -1,0 +1,1 @@
+{"name":"Fruity Rescue","short_name":"Fruity Rescue","start_url":"./","display":"fullscreen","background_color":"#ff9de2","lang":"en","scope":"./","description":"Catch the falling fruit and rescue them before they hit the ground.","theme_color":"#ff9de2","orientation":"landscape","icons":[{"src":"pwa-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}

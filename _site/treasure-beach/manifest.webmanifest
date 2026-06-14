@@ -1,0 +1,1 @@
+{"name":"Treasure Beach","short_name":"Treasure Beach","description":"Tap sand piles to discover shells, coins, pirates, and crabs.","start_url":"./","display":"fullscreen","background_color":"#73d9ff","theme_color":"#ffcf67","lang":"en","scope":"./","orientation":"landscape","icons":[{"src":"pwa-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
