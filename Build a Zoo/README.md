@@ -7,6 +7,7 @@ A friendly Phaser 3 game for young kids. Animals arrive one by one, and players 
 - Baby and Explorer modes
 - Drag-and-drop animal placement
 - Habitat matching for ice, savanna, aquarium, forest, and desert homes
+- Expanded emoji animal roster across all habitats
 - Gentle hints, happy feedback, scoring, and celebration animations
 
 ## Scripts
