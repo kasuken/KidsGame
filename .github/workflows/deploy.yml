@@ -35,6 +35,7 @@ jobs:
           # Add new games here (folder name on the left, URL slug on the right).
           games=(
             "Balloon Pop Adventure=balloon-pop-adventure"
+            "Build a Zoo=build-a-zoo"
             "Feed the Monster=feed-the-monster"
             "Fruity Rescue=fruity-rescue"
           )
