@@ -103,3 +103,34 @@ body {
     from { translate: 0 0; }
     to { translate: 0 -24px; }
 }
+
+#home-btn {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 200;
+    font-family: 'Titan One', cursive;
+    font-size: 1rem;
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--sun);
+    border: 5px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+    display: inline-block;
+    line-height: 1.2;
+}
+
+#home-btn:hover,
+#home-btn:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--ink);
+    outline: none;
+}
+
+#home-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 var(--ink);
+}
