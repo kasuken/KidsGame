@@ -1,0 +1,79 @@
+name: Deploy Kids Games to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow the workflow to publish to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, cancelling in-progress runs
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build all games
+        run: |
+          set -e
+          # Map of "<source folder>=<output slug>".
+          # Add new games here (folder name on the left, URL slug on the right).
+          games=(
+            "Balloon Pop Adventure=balloon-pop-adventure"
+            "Feed the Monster=feed-the-monster"
+            "Fruity Rescue=fruity-rescue"
+          )
+
+          rm -rf _site
+          mkdir -p _site
+
+          for entry in "${games[@]}"; do
+            dir="${entry%%=*}"
+            slug="${entry##*=}"
+            echo "::group::Building $dir -> $slug"
+            pushd "$dir" > /dev/null
+            if [ -f package-lock.json ]; then
+              npm ci
+            else
+              npm install
+            fi
+            npm run build
+            popd > /dev/null
+            mkdir -p "_site/$slug"
+            cp -r "$dir/dist/." "_site/$slug/"
+            echo "::endgroup::"
+          done
+
+          # Copy the landing page (home) to the site root
+          cp -r landing/. _site/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

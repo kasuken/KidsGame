@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kids Game Arcade 🎮</title>
+  <meta name="description" content="A playful collection of fun, friendly browser games for kids." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Titan+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #2b2150;
+      --card: #ffffff;
+      --shadow: 0 18px 40px rgba(43, 33, 80, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(160deg, #ffd86b 0%, #ff9de2 45%, #7ad7ff 100%);
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4vh 5vw 8vh;
+      overflow-x: hidden;
+    }
+
+    .floaties {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .floaties span {
+      position: absolute;
+      font-size: clamp(2rem, 6vw, 4rem);
+      opacity: 0.55;
+      animation: drift 14s linear infinite;
+    }
+
+    .floaties span:nth-child(1) { left: 6%;  animation-delay: 0s;   animation-duration: 16s; }
+    .floaties span:nth-child(2) { left: 26%; animation-delay: 3s;   animation-duration: 19s; }
+    .floaties span:nth-child(3) { left: 48%; animation-delay: 6s;   animation-duration: 15s; }
+    .floaties span:nth-child(4) { left: 70%; animation-delay: 2s;   animation-duration: 18s; }
+    .floaties span:nth-child(5) { left: 88%; animation-delay: 5s;   animation-duration: 21s; }
+
+    @keyframes drift {
+      0%   { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(360deg); }
+    }
+
+    header {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 5vh;
+    }
+
+    h1 {
+      font-family: 'Cherry Bomb One', 'Titan One', cursive;
+      font-size: clamp(2.6rem, 8vw, 5rem);
+      margin: 0;
+      color: #fff;
+      text-shadow: 0 4px 0 #ff6ad5, 0 8px 24px rgba(43, 33, 80, 0.35);
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      font-weight: 800;
+      margin-top: 0.6rem;
+      color: #4a2b7a;
+      background: rgba(255, 255, 255, 0.65);
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+    }
+
+    .grid {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: clamp(1.2rem, 4vw, 2.2rem);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 28px;
+      padding: 2rem 1.6rem 1.8rem;
+      text-decoration: none;
+      color: var(--ink);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      border: 4px solid transparent;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 26px 50px rgba(43, 33, 80, 0.28);
+      border-color: #ffd86b;
+      outline: none;
+    }
+
+    .emoji {
+      font-size: clamp(3.4rem, 9vw, 4.6rem);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.15));
+    }
+
+    .card h2 {
+      font-family: 'Titan One', cursive;
+      font-size: clamp(1.3rem, 4vw, 1.7rem);
+      margin: 0 0 0.5rem;
+    }
+
+    .card p {
+      margin: 0 0 1.2rem;
+      font-weight: 700;
+      color: #5b5478;
+      font-size: 0.98rem;
+    }
+
+    .play-btn {
+      margin-top: auto;
+      font-family: 'Titan One', cursive;
+      font-size: 1.1rem;
+      color: #fff;
+      background: linear-gradient(135deg, #ff6ad5, #ff8a5c);
+      padding: 0.65rem 1.8rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 18px rgba(255, 106, 213, 0.4);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 6vh;
+      font-weight: 800;
+      color: #4a2b7a;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .floaties span { animation: none; display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="floaties" aria-hidden="true">
+    <span>🎈</span>
+    <span>🍓</span>
+    <span>⭐</span>
+    <span>👾</span>
+    <span>🍌</span>
+  </div>
+
+  <header>
+    <h1>Kids Game Arcade</h1>
+    <div class="tagline">Pick a game and start playing! 🎉</div>
+  </header>
+
+  <main class="grid">
+    <a class="card" href="./balloon-pop-adventure/">
+      <div class="emoji">🎈</div>
+      <h2>Balloon Pop Adventure</h2>
+      <p>Pop colorful balloons and practice colors, numbers, and letters.</p>
+      <span class="play-btn">Play ▶</span>
+    </a>
+
+    <a class="card" href="./feed-the-monster/">
+      <div class="emoji">👾</div>
+      <h2>Feed the Monster</h2>
+      <p>Feed the hungry monster the right snacks and watch it giggle.</p>
+      <span class="play-btn">Play ▶</span>
+    </a>
+
+    <a class="card" href="./fruity-rescue/">
+      <div class="emoji">🍓</div>
+      <h2>Fruity Rescue</h2>
+      <p>Catch the falling fruit and rescue them before they hit the ground.</p>
+      <span class="play-btn">Play ▶</span>
+    </a>
+  </main>
+
+  <footer>Made with ❤️ for little players</footer>
+</body>
+</html>
