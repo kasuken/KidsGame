@@ -1,6 +1,31 @@
 export type GameMode = 'baby' | 'explorer';
 export type HabitatKind = 'ice' | 'savanna' | 'aquarium' | 'forest' | 'desert';
-export type AnimalKind = 'penguin' | 'lion' | 'fish' | 'monkey' | 'camel';
+export type AnimalKind =
+    | 'penguin'
+    | 'polarBear'
+    | 'seal'
+    | 'lion'
+    | 'zebra'
+    | 'giraffe'
+    | 'elephant'
+    | 'rhino'
+    | 'hippo'
+    | 'fish'
+    | 'tropicalFish'
+    | 'dolphin'
+    | 'whale'
+    | 'shark'
+    | 'octopus'
+    | 'monkey'
+    | 'koala'
+    | 'deer'
+    | 'owl'
+    | 'fox'
+    | 'bear'
+    | 'camel'
+    | 'lizard'
+    | 'snake'
+    | 'scorpion';
 
 export interface ModeSettings {
     rounds: number;

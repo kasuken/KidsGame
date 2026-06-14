@@ -12,21 +12,41 @@ const HABITATS: HabitatProfile[] = [
 
 const ANIMALS: Record<AnimalKind, AnimalProfile> = {
     penguin: { kind: 'penguin', name: 'Penguin', emoji: '🐧', habitat: 'ice', clue: 'Penguins waddle on ice.' },
+    polarBear: { kind: 'polarBear', name: 'Polar Bear', emoji: '🐻‍❄️', habitat: 'ice', clue: 'Polar bears stay cool in icy places.' },
+    seal: { kind: 'seal', name: 'Seal', emoji: '🦭', habitat: 'ice', clue: 'Seals rest on chilly icy shores.' },
     lion: { kind: 'lion', name: 'Lion', emoji: '🦁', habitat: 'savanna', clue: 'Lions prowl the savanna.' },
+    zebra: { kind: 'zebra', name: 'Zebra', emoji: '🦓', habitat: 'savanna', clue: 'Zebras graze in warm grasslands.' },
+    giraffe: { kind: 'giraffe', name: 'Giraffe', emoji: '🦒', habitat: 'savanna', clue: 'Giraffes stretch high over savanna trees.' },
+    elephant: { kind: 'elephant', name: 'Elephant', emoji: '🐘', habitat: 'savanna', clue: 'Elephants roam open savanna plains.' },
+    rhino: { kind: 'rhino', name: 'Rhino', emoji: '🦏', habitat: 'savanna', clue: 'Rhinos love sunny grassy habitats.' },
+    hippo: { kind: 'hippo', name: 'Hippo', emoji: '🦛', habitat: 'savanna', clue: 'Hippos cool off in warm savanna waters.' },
     fish: { kind: 'fish', name: 'Fish', emoji: '🐟', habitat: 'aquarium', clue: 'Fish need water to swim.' },
+    tropicalFish: { kind: 'tropicalFish', name: 'Tropical Fish', emoji: '🐠', habitat: 'aquarium', clue: 'Tropical fish sparkle in clear water.' },
+    dolphin: { kind: 'dolphin', name: 'Dolphin', emoji: '🐬', habitat: 'aquarium', clue: 'Dolphins leap through ocean water.' },
+    whale: { kind: 'whale', name: 'Whale', emoji: '🐳', habitat: 'aquarium', clue: 'Whales are giant animals of the sea.' },
+    shark: { kind: 'shark', name: 'Shark', emoji: '🦈', habitat: 'aquarium', clue: 'Sharks swim in deep blue water.' },
+    octopus: { kind: 'octopus', name: 'Octopus', emoji: '🐙', habitat: 'aquarium', clue: 'Octopuses hide and glide underwater.' },
     monkey: { kind: 'monkey', name: 'Monkey', emoji: '🐒', habitat: 'forest', clue: 'Monkeys swing in trees.' },
-    camel: { kind: 'camel', name: 'Camel', emoji: '🐪', habitat: 'desert', clue: 'Camels like sandy deserts.' }
+    koala: { kind: 'koala', name: 'Koala', emoji: '🐨', habitat: 'forest', clue: 'Koalas rest in leafy tree homes.' },
+    deer: { kind: 'deer', name: 'Deer', emoji: '🦌', habitat: 'forest', clue: 'Deer tiptoe through forest paths.' },
+    owl: { kind: 'owl', name: 'Owl', emoji: '🦉', habitat: 'forest', clue: 'Owls perch quietly in forest trees.' },
+    fox: { kind: 'fox', name: 'Fox', emoji: '🦊', habitat: 'forest', clue: 'Foxes sneak through shady forests.' },
+    bear: { kind: 'bear', name: 'Bear', emoji: '🐻', habitat: 'forest', clue: 'Bears wander deep forest woods.' },
+    camel: { kind: 'camel', name: 'Camel', emoji: '🐪', habitat: 'desert', clue: 'Camels like sandy deserts.' },
+    lizard: { kind: 'lizard', name: 'Lizard', emoji: '🦎', habitat: 'desert', clue: 'Lizards bask on warm desert rocks.' },
+    snake: { kind: 'snake', name: 'Snake', emoji: '🐍', habitat: 'desert', clue: 'Snakes slither across hot sand.' },
+    scorpion: { kind: 'scorpion', name: 'Scorpion', emoji: '🦂', habitat: 'desert', clue: 'Scorpions thrive in dry deserts.' }
 };
 
 const MODE_SETTINGS: Record<GameMode, ModeSettings> = {
     baby: {
-        rounds: 5,
+        rounds: 6,
         thinkingTime: 0,
         hintDelay: 1200,
         decoyChance: 0
     },
     explorer: {
-        rounds: 9,
+        rounds: 25,
         thinkingTime: 900,
         hintDelay: 2600,
         decoyChance: 0.22
@@ -93,16 +113,43 @@ export default class GameScene extends Phaser.Scene {
     }
 
     private createAnimalQueue(): AnimalProfile[] {
-        const starter: AnimalKind[] = ['penguin', 'lion', 'fish'];
-        const full: AnimalKind[] = ['penguin', 'lion', 'fish', 'monkey', 'camel'];
+        const starter: AnimalKind[] = ['penguin', 'seal', 'lion', 'zebra', 'fish', 'dolphin'];
+        const full: AnimalKind[] = [
+            'penguin',
+            'polarBear',
+            'seal',
+            'lion',
+            'zebra',
+            'giraffe',
+            'elephant',
+            'rhino',
+            'hippo',
+            'fish',
+            'tropicalFish',
+            'dolphin',
+            'whale',
+            'shark',
+            'octopus',
+            'monkey',
+            'koala',
+            'deer',
+            'owl',
+            'fox',
+            'bear',
+            'camel',
+            'lizard',
+            'snake',
+            'scorpion'
+        ];
         const pool = this.mode === 'baby' ? starter : full;
+        const shuffled = Phaser.Utils.Array.Shuffle([...pool]);
         const queue: AnimalProfile[] = [];
 
         for (let i = 0; i < this.settings.rounds; i += 1) {
-            queue.push(ANIMALS[pool[i % pool.length]]);
+            queue.push(ANIMALS[shuffled[i % shuffled.length]]);
         }
 
-        return Phaser.Utils.Array.Shuffle(queue);
+        return queue;
     }
 
     private drawBackground(): void {
