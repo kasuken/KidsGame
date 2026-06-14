@@ -1,0 +1,105 @@
+:root {
+    --sky: #bceeff;
+    --sun: #ffd75e;
+    --ink: #151515;
+    --grass: #55d982;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Nunito', 'Titan One', sans-serif;
+    background-color: var(--sky);
+    background-image:
+        linear-gradient(140deg, rgba(255, 215, 94, 0.92) 0 18%, transparent 18% 100%),
+        radial-gradient(circle at 84% 14%, #ff6b91 0 9%, transparent 9% 100%),
+        radial-gradient(circle at 14% 78%, #48d7ff 0 11%, transparent 11% 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 18px, transparent 18px 46px);
+}
+
+#game-container {
+    width: min(100vw, 980px);
+    height: min(100vh, 620px);
+    padding: 12px;
+    z-index: 10;
+    position: relative;
+    perspective: 1000px;
+}
+
+#game-container canvas {
+    border-radius: 34px;
+    border: 12px solid #ffffff;
+    box-shadow:
+        12px 22px 0 var(--ink),
+        inset 0 0 0 10px var(--sun);
+    transform: rotate(0.8deg);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    background-color: #ffffff;
+}
+
+#game-container canvas:hover {
+    transform: rotate(-0.7deg) scale(1.015) translateY(-8px);
+    box-shadow:
+        18px 30px 0 var(--ink),
+        inset 0 0 0 10px var(--sun);
+}
+
+#party-ribbons span {
+    position: fixed;
+    width: 42px;
+    height: 180px;
+    border: 8px solid var(--ink);
+    border-radius: 28px;
+    box-shadow: 8px 8px 0 var(--ink);
+    opacity: 0.95;
+    animation: bob 5.6s ease-in-out infinite alternate;
+}
+
+#party-ribbons span:nth-child(1) {
+    left: 5vw;
+    top: 8vh;
+    background: #ff5c8a;
+    transform: rotate(-18deg);
+}
+
+#party-ribbons span:nth-child(2) {
+    right: 7vw;
+    top: 12vh;
+    background: #ffd75e;
+    transform: rotate(14deg);
+    animation-delay: -1.4s;
+}
+
+#party-ribbons span:nth-child(3) {
+    left: 11vw;
+    bottom: 9vh;
+    background: #55d982;
+    transform: rotate(12deg);
+    animation-delay: -2.8s;
+}
+
+#party-ribbons span:nth-child(4) {
+    right: 13vw;
+    bottom: 7vh;
+    background: #48d7ff;
+    transform: rotate(-10deg);
+    animation-delay: -4.2s;
+}
+
+@keyframes bob {
+    from { translate: 0 0; }
+    to { translate: 0 -24px; }
+}
