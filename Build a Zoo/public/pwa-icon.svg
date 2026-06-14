@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Build a Zoo icon">
+  <rect width="512" height="512" rx="112" fill="#d8f6ff"/>
+  <circle cx="392" cy="112" r="54" fill="#ffdf7e" stroke="#173329" stroke-width="18"/>
+  <path d="M72 336c80-92 184-92 368 0v104H72z" fill="#70d27b" stroke="#173329" stroke-width="18" stroke-linejoin="round"/>
+  <rect x="104" y="174" width="304" height="204" rx="34" fill="#fff" stroke="#173329" stroke-width="18"/>
+  <path d="M104 264h304" stroke="#173329" stroke-width="16"/>
+  <path d="M204 174v204M308 174v204" stroke="#173329" stroke-width="16"/>
+  <text x="154" y="244" font-size="76" text-anchor="middle" dominant-baseline="middle">🐧</text>
+  <text x="256" y="244" font-size="76" text-anchor="middle" dominant-baseline="middle">🦁</text>
+  <text x="358" y="244" font-size="74" text-anchor="middle" dominant-baseline="middle">🐟</text>
+  <text x="256" y="350" font-size="80" text-anchor="middle" dominant-baseline="middle">🏡</text>
+</svg>

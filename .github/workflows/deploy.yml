@@ -37,6 +37,7 @@ jobs:
             "Balloon Pop Adventure=balloon-pop-adventure"
             "Feed the Monster=feed-the-monster"
             "Fruity Rescue=fruity-rescue"
+            "Build a Zoo=build-a-zoo"
           )
 
           rm -rf _site
