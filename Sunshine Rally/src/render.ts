@@ -5,10 +5,11 @@ export function render(ctx: CanvasRenderingContext2D, width: number, height: num
   const horizon = height * 0.34;
   const bottom = height * 0.94;
   const bend = bendAt(drive.level, drive.distance + 240);
+  const roadHalf = width * 0.34;
   const project = (z: number, lane = 0) => {
     const scale = 1 / (1 + z / 170);
     const center = width * 0.5 + bend * width * 0.37 * (1 - scale) ** 2;
-    return { x: center + lane * width * 0.42 * scale, y: horizon + (bottom - horizon) * scale, half: width * 0.42 * scale, scale };
+    return { x: center + lane * roadHalf * scale, y: horizon + (bottom - horizon) * scale, half: roadHalf * scale, scale };
   };
   function polygon(points: number[][], color: string) {
     ctx.fillStyle = color;
@@ -129,6 +130,6 @@ export function render(ctx: CanvasRenderingContext2D, width: number, height: num
   }
   ctx.save();
   if (drive.cooldown > 0) ctx.globalAlpha = 0.65;
-  car(width * 0.5 + drive.x * width * 0.42, bottom, width * 0.13, '#ff654c', true);
+  car(width * 0.5 + drive.x * roadHalf, bottom, width * 0.13, '#ff654c', true);
   ctx.restore();
 }

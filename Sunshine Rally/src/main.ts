@@ -106,7 +106,7 @@ window.addEventListener('keydown', event => {
   }
   if (mode !== 'driving' || !drivingKeys.includes(event.code)) return;
   // Keep normal Space activation for focused utility buttons.
-  if (event.code === 'Space' && document.activeElement?.closest('button, a')) return;
+  if (event.code === 'Space' && document.activeElement?.closest('.utilities button, a')) return;
   event.preventDefault();
   keys.add(event.code);
   syncInput();
