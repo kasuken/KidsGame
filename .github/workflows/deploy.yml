@@ -40,6 +40,7 @@ jobs:
             "Build a Zoo=build-a-zoo"
             "Treasure Beach=treasure-beach"
             "Garden Guardians=garden-guardians"
+            "Sunshine Rally=sunshine-rally"
           )
 
           rm -rf _site

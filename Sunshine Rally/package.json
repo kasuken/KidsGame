@@ -1,0 +1,19 @@
+{
+  "name": "sunshine-rally",
+  "version": "1.0.0",
+  "description": "A sunny arcade road trip for little drivers.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "serve": "vite preview --host 0.0.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "typescript": "4.9.5",
+    "vite": "8.0.16",
+    "vite-plugin-pwa": "1.3.0"
+  }
+}

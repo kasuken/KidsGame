@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#102f3b" />
+    <meta name="description" content="A sunny arcade road trip for little drivers. Big touch controls, friendly traffic, and six adventures that grow with you." />
+    <link rel="icon" href="./pwa-icon.svg" type="image/svg+xml" />
+    <title>Sunshine Rally · Kids Game Arcade</title>
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <a class="home" href="../" aria-label="Back to all games">↖ <span>Games</span></a>
+        <div class="brand"><img src="./pwa-icon.svg" alt="" /><span>SUNSHINE <b>RALLY</b></span></div>
+        <div class="utilities">
+          <button id="sound" aria-label="Turn sound on" aria-pressed="false">♪ <span>Off</span></button>
+          <button id="pause" disabled>Ⅱ <span>Pause</span></button>
+        </div>
+      </header>
+      <main>
+        <section class="cockpit" aria-label="Driving game">
+          <div class="hud">
+            <div class="destination"><small id="route-number">ROAD TRIP 01 / 06</small><h1 id="route-name">Hello, sunshine!</h1></div>
+            <div class="journey"><span>START</span><progress id="progress" max="100" value="0" aria-label="Distance to finish"></progress><span>⚑</span></div>
+            <div class="star-counter" aria-label="Collected stars">★ <b id="stars">0</b></div>
+          </div>
+          <div class="scene">
+            <canvas id="road" aria-label="A red convertible on a sunny road. Use the left and right buttons to steer, collect stars, and pass cars."></canvas>
+            <div class="scene-label"><span class="live-dot"></span> THE SCENIC ROUTE</div>
+            <div class="speed"><b id="speed">0</b><span>KM/H</span></div>
+            <div id="notice" class="notice" role="status">No hurry. Just a happy little road trip.</div>
+          </div>
+          <div class="controls">
+            <div class="steering">
+              <button id="left" class="drive-button" aria-label="Steer left">◀</button>
+              <button id="right" class="drive-button" aria-label="Steer right">▶</button>
+            </div>
+            <div class="cruise"><span>✦ AUTO-GO</span><small>You steer. We do the vroom.</small></div>
+            <button id="brake" class="brake" aria-label="Hold to slow down"><span>▰</span> SLOW</button>
+          </div>
+        </section>
+        <footer><span>← → STEER <i>·</i> SPACE TO SLOW <i>·</i> P TO PAUSE</span><span>SUNSHINE & GOOD TIMES™ <b>↗</b></span></footer>
+        <p class="rotate-note">↻ Turn your iPad sideways for a bigger road. You can still play this way!</p>
+      </main>
+    </div>
+    <div id="overlay" class="overlay">
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+        <div class="postcard" aria-hidden="true">
+          <div class="postcard-sun"></div><div class="postcard-road"></div>
+          <span class="postcard-top">THE LITTLE ROAD TRIP CLUB</span>
+          <div class="postcard-title">Less hurry.<br />More <em>happy.</em></div>
+          <img src="./pwa-icon.svg" alt="" />
+          <span class="postcard-bottom">EST. TODAY &nbsp; / &nbsp; GOOD TIMES AHEAD ↗</span>
+        </div>
+        <div class="dialog-content">
+          <span id="dialog-kicker" class="eyebrow">YOUR FIRST BIG LITTLE ADVENTURE</span>
+          <h2 id="dialog-title">Hello, driver!</h2>
+          <p id="dialog-text">A little red car. A big blue sky. Let’s take the sunny way home.</p>
+          <div id="instructions" class="instructions"><span><b>◀ ▶</b> Hold to steer</span><span><b>★</b> Find the stars</span><span><b>▰</b> Hold SLOW for bends</span></div>
+          <div id="routes" class="routes" hidden></div>
+          <button id="primary" class="primary">Let’s drive! <span>→</span></button>
+          <button id="secondary" class="secondary">Choose a road trip · 6 places to go</button>
+          <p id="dialog-note" class="dialog-note">No timer. No game over. Just keep exploring.</p>
+          <a href="../" class="dialog-home">↖ Back to all games</a>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
