@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kids-arcade-v1';
+const CACHE_NAME = 'kids-arcade-v2';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -16,7 +16,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+      Promise.all(keys.filter((k) => k.startsWith('kids-arcade-') && k !== CACHE_NAME).map((k) => caches.delete(k)))
     )
   );
   self.clients.claim();
@@ -24,16 +24,23 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  const scope = new URL(self.registration.scope);
+  if (url.origin !== scope.origin || !PRECACHE_URLS.some((path) => new URL(path, scope).href === url.href)) return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const networkFetch = fetch(event.request).then((response) => {
+    caches.open(CACHE_NAME).then(async (cache) => {
+      try {
+        const response = await fetch(event.request);
         if (response.ok) {
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
+          await cache.put(event.request, response.clone());
         }
         return response;
-      });
-      return cached || networkFetch;
+      } catch (error) {
+        const cached = await cache.match(event.request);
+        if (cached) return cached;
+        throw error;
+      }
     })
   );
 });

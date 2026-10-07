@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#173e32" />
+    <meta name="description" content="A friendly tower defence adventure for little gardeners. Grow flowers, protect strawberries, and discover magical powers. Made for landscape iPad play." />
+    <link rel="icon" href="./pwa-icon.svg" type="image/svg+xml" />
+    <title>Garden Guardians · Kids Game Arcade</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="home-button" href="../" aria-label="Back to all games"><span aria-hidden="true">↖</span> Games</a>
+        <div class="brand"><img src="./pwa-icon.svg" alt="" /><div>Garden Guardians<small>A LITTLE GARDEN. A BIG ADVENTURE.</small></div></div>
+        <div class="utilities">
+          <button id="sound" class="icon-button" aria-label="Turn sound on" aria-pressed="false">♪ <span>Off</span></button>
+          <button id="pause" class="icon-button" aria-label="Pause game">Ⅱ <span>Pause</span></button>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="garden-panel" aria-label="Garden game">
+          <div class="garden-top">
+            <div class="level-label"><span id="level-number">GARDEN 01 / 06</span><h1 id="level-name">Sunny beginnings</h1></div>
+            <div class="stats">
+              <div class="stat" aria-label="Garden hearts"><span aria-hidden="true">♥</span><b id="hearts">8</b></div>
+              <div class="stat coins" aria-label="Sun coins"><span aria-hidden="true">☀</span><b id="coins">140</b></div>
+              <div class="stat wave-stat"><small>WAVE</small><b id="wave">1 / 2</b></div>
+            </div>
+          </div>
+          <div id="board" class="board">
+            <canvas id="garden" aria-label="Snails follow the sandy path toward the strawberry garden. Plant flowers on the numbered patches to send them home."></canvas>
+            <div class="map-tag entrance">SNAIL TRAIL <span>↓</span></div>
+            <div class="map-tag home-tag">STRAWBERRY HOME</div>
+            <div id="pads" aria-label="Flower planting patches"></div>
+            <div id="power-banner" class="power-banner" role="status"></div>
+            <div id="tower-actions" class="tower-actions" hidden>
+              <span id="tower-name"></span>
+              <button id="remove-tower">Move flower ↩</button>
+              <button id="close-tower" aria-label="Close flower options">×</button>
+            </div>
+          </div>
+          <div class="garden-bottom"><span class="hint-dot" aria-hidden="true"></span><p id="hint" role="status">Pick a flower, then tap a + patch.</p><span class="garden-note">GROW · GUARD · GIGGLE</span></div>
+        </section>
+
+        <aside class="toolbox" aria-label="Flowers and special powers">
+          <div class="toolbox-heading"><span class="eyebrow">YOUR LITTLE TEAM</span><h2>Plant a friend</h2></div>
+          <div id="flower-shop" class="flower-shop">
+            <button class="flower-card selected" data-flower="bloom" aria-pressed="true">
+              <span class="flower-icon bloom-icon" aria-hidden="true">✿</span>
+              <span class="flower-description"><b>Bubble bloom</b><small>Pops snails home</small></span><span class="price">☀ 40</span>
+            </button>
+            <button class="flower-card" data-flower="mint" aria-pressed="false">
+              <span class="flower-icon mint-icon" aria-hidden="true">❄</span>
+              <span class="flower-description"><b>Chilly mint</b><small>Slows the snails</small></span><span class="price">☀ 50</span>
+            </button>
+            <button class="flower-card" data-flower="sun" aria-pressed="false">
+              <span class="flower-icon sun-icon" aria-hidden="true">☀</span>
+              <span class="flower-description"><b>Sunny burst</b><small>Extra big bubbles!</small></span><span class="price">☀ 65</span>
+            </button>
+          </div>
+          <div class="power-heading"><span class="eyebrow">A LITTLE EXTRA MAGIC</span><span aria-hidden="true">✦</span></div>
+          <div class="powers">
+            <button id="rainbow" class="power rainbow" disabled><span class="power-icon" aria-hidden="true">🌈</span><span><b>Rainbow pop</b><small id="rainbow-status">Charging in the wave</small></span><span class="charge-track"><span id="rainbow-charge"></span></span></button>
+            <button id="freeze" class="power freeze" disabled><span class="power-icon" aria-hidden="true">❄</span><span><b>Snow cloud</b><small id="freeze-status">Charging in the wave</small></span><span class="charge-track"><span id="freeze-charge"></span></span></button>
+          </div>
+          <button id="start-wave" class="start-wave">Let’s go! <span aria-hidden="true">→</span></button>
+          <p class="toolbox-note" id="wave-note">Plant a flower to start.</p>
+        </aside>
+      </main>
+      <div class="rotate-note">↻ More room to grow! Turn your iPad sideways.</div>
+    </div>
+
+    <div id="overlay" class="overlay">
+      <section class="dialog welcome" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+        <div class="welcome-art" aria-hidden="true"><div class="art-orbit"></div><img src="./pwa-icon.svg" alt="" /><span class="art-star one">✦</span><span class="art-star two">✦</span><span class="art-leaf">❧</span><span class="art-caption">THE STRAWBERRIES NEED YOU!</span></div>
+        <div class="dialog-content">
+          <span class="eyebrow" id="dialog-eyebrow">HELLO, LITTLE GARDENER</span>
+          <h2 id="dialog-title">Small flowers.<br />Big superpowers.</h2>
+          <p id="dialog-text">Cheeky snails want our strawberries! Grow a flower team and gently pop them back home.</p>
+          <div id="how-to" class="how-to"><span><b>1</b> Tap a flower ✿</span><span><b>2</b> Tap a + patch</span><span><b>3</b> Let’s go! →</span></div>
+          <div id="level-picker" class="level-picker" hidden></div>
+          <button id="dialog-primary" class="dialog-primary">Let’s grow! <span>→</span></button>
+          <button id="dialog-secondary" class="dialog-secondary">Choose a garden · 6 little adventures</button>
+          <a class="dialog-home" href="../">↖ Back to all games</a>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

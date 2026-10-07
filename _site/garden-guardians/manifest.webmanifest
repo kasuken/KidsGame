@@ -1,0 +1,1 @@
+{"name":"Garden Guardians","short_name":"Garden","description":"Grow a flower team and keep the strawberry garden safe.","start_url":"./","display":"standalone","background_color":"#f7f4df","theme_color":"#173e32","lang":"en","scope":"./","orientation":"landscape","icons":[{"src":"pwa-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}

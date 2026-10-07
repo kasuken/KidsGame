@@ -39,6 +39,7 @@ jobs:
             "Fruity Rescue=fruity-rescue"
             "Build a Zoo=build-a-zoo"
             "Treasure Beach=treasure-beach"
+            "Garden Guardians=garden-guardians"
           )
 
           rm -rf _site
